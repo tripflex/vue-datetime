@@ -28,6 +28,8 @@
           :min-date="minDatetime"
           :max-date="maxDatetime"
           :week-start="weekStart"
+          :disabled-dates="disabledDates"
+          :disabled-days="disabledDays"
       ></datetime-calendar>
       <datetime-time-picker
           v-if="step === 'time'"
@@ -54,10 +56,10 @@
 <script>
 import { DateTime } from 'luxon'
 import { createFlowManager, createFlowManagerFromType } from './util'
-import DatetimeCalendar from './DatetimeCalendar'
-import DatetimeTimePicker from './DatetimeTimePicker'
-import DatetimeYearPicker from './DatetimeYearPicker'
-import DatetimeMonthPicker from './DatetimeMonthPicker'
+import DatetimeCalendar from './DatetimeCalendar.vue'
+import DatetimeTimePicker from './DatetimeTimePicker.vue'
+import DatetimeYearPicker from './DatetimeYearPicker.vue'
+import DatetimeMonthPicker from './DatetimeMonthPicker.vue'
 
 const KEY_TAB = 9
 const KEY_ENTER = 13
@@ -108,6 +110,18 @@ export default {
     maxDatetime: {
       type: DateTime,
       default: null
+    },
+    disabledDates: {
+      type   : Array,
+      default() {
+        return []
+      }
+    },
+    disabledDays : {
+      type   : Array,
+      default() {
+        return []
+      }
     },
     auto: {
       type: Boolean,

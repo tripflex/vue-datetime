@@ -29,8 +29,26 @@ export function monthDays (year, month, weekStart) {
     )
 }
 
-export function monthDayIsDisabled (minDate, maxDate, year, month, day) {
-  const date = DateTime.fromObject({ year, month, day, zone: 'UTC' })
+export function monthDayIsDisabled (disabledDates, disabledDays, minDate, maxDate, year, month, day) {
+  const date = DateTime.fromObject({ year, month, day }, {zone: 'UTC'})
+
+  if( disabledDays && disabledDays.length > 0 ){
+     // Use set for faster lookups
+     const ddaysSet = new Set( disabledDays )
+     if( ddaysSet.has( date.weekday ) ){
+       return true
+     }
+  }
+
+  if( disabledDates && disabledDates.length > 0 ){
+    const ddatesSet = new Set( disabledDates )
+    const isoDate = date.toISODate()
+    const isoDateNoYear = isoDate.replace( `${date.year}-`, '' )
+    console.log( isoDate, isoDateNoYear )
+    if( ddatesSet.has( isoDate ) || ddatesSet.has( isoDateNoYear ) ){
+      return true
+    }
+  }
 
   minDate = minDate ? startOfDay(minDate.setZone('UTC', { keepLocalTime: true })) : null
   maxDate = maxDate ? startOfDay(maxDate.setZone('UTC', { keepLocalTime: true })) : null

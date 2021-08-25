@@ -54,12 +54,24 @@ export default {
     weekStart: {
       type: Number,
       default: 1
-    }
+    },
+    disabledDates: {
+      type   : Array,
+      default() {
+        return []
+      }
+    },
+    disabledDays : {
+      type   : Array,
+      default() {
+        return []
+      }
+    },
   },
 
   data () {
     return {
-      newDate: DateTime.fromObject({ year: this.year, month: this.month, zone: 'UTC' }),
+      newDate: DateTime.fromObject({ year: this.year, month: this.month }, { zone: 'utc' }),
       weekdays: weekdays(this.weekStart),
       months: months()
     }
@@ -79,7 +91,7 @@ export default {
       return monthDays(this.newYear, this.newMonth, this.weekStart).map(day => ({
         number: day,
         selected: day && this.year === this.newYear && this.month === this.newMonth && this.day === day,
-        disabled: !day || monthDayIsDisabled(this.minDate, this.maxDate, this.newYear, this.newMonth, day)
+        disabled: !day || monthDayIsDisabled(this.disabledDates, this.disabledDays, this.minDate, this.maxDate, this.newYear, this.newMonth, day)
       }))
     }
   },

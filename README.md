@@ -115,6 +115,8 @@ hour-step | `Number` | `1` | Hour step.
 minute-step | `Number` | `1` | Minute step.
 min-datetime | ISO 8601 `String` | `null` | Minimum datetime.
 max-datetime | ISO 8601 `String` | `null` | Maximum datetime.
+disabled-days | `Array` | `[]` | Days to disable in date picker (should match weekstart numbering - ie 6 is Saturday, 7 is Sunday).  Example `[6, 7]`
+disabled-dates | `Array` | `[]` | Specific dates to disable in date picker (`.toISODate()` format). Example `['2022-12-31']`
 auto | `Boolean` | `false` | Auto continue/close on select.
 week-start | `Number` | auto from locale if _weekstart_ is available or `1` | First day of the week. 1 is Monday and 7 is Sunday.
 flow | `Array` | Depends of *type* | Customize steps flow, steps available: time, date, month, year. Example: ['year', 'date', 'time']

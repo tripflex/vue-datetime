@@ -26,6 +26,8 @@
           :minute-step="minuteStep"
           :min-datetime="popupMinDatetime"
           :max-datetime="popupMaxDatetime"
+          :disabled-dates="disabledDates"
+          :disabled-days="disabledDays"
           @confirm="confirm"
           @cancel="cancel"
           :auto="auto"
@@ -45,7 +47,7 @@
 
 <script>
 import { DateTime } from 'luxon'
-import DatetimePopup from './DatetimePopup'
+import DatetimePopup from './DatetimePopup.vue'
 import { datetimeFromISO, startOfDay, weekStart } from './util'
 
 export default {
@@ -118,6 +120,18 @@ export default {
     maxDatetime: {
       type: String,
       default: null
+    },
+    disabledDates: {
+      type: Array,
+      default(){
+        return []
+      }
+    },
+    disabledDays: {
+      type: Array,
+      default() {
+        return []
+      }
     },
     auto: {
       type: Boolean,
