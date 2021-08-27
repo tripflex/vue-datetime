@@ -17,6 +17,7 @@ This version includes the following additional functionality:
 - `disable-times`
 - `sub-title`
 - `disable-days`
+- `use-input`
 
 ## Demo
 
@@ -111,6 +112,7 @@ Parameter | Type | Default | Description
 --------- | ---- | ------- | -----------
 v-model (*required*) | ISO 8601 `String` | - | Datetime.
 type | `String` | `date` | Picker type: date, datetime or time.
+use-input | `Boolean` | `true` | Whether or not to use and show an input.  If you set this to false, you need to set `ref` on `datetime` and trigger it to open in your code with `this.$refs.datetime.open()`
 input-id | `String` | `''` | Id for the input.
 input-class | `String`, `Array` or `Object` | `''` | Class for the input.
 input-style | `String`, `Array` or `Object` | `''` | Style for the input.
