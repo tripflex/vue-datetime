@@ -9,6 +9,15 @@
 
 > Mobile friendly datetime picker for Vue. Supports date, datetime and time modes, i18n and more.
 
+## Fork Details
+This is a personal for of the original project you can find at https://github.com/mariomka/vue-datetime
+
+This version includes the following additional functionality:
+- `disable-dates`
+- `disable-times`
+- `sub-title`
+- `disable-days`
+
 ## Demo
 
 **[Go to demo](http://mariomka.github.io/vue-datetime)**.
