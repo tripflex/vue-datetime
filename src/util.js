@@ -70,7 +70,89 @@ export function yearIsDisabled (minDate, maxDate, year) {
          (maxYear && year > maxYear)
 }
 
-export function timeComponentIsDisabled (min, max, component) {
+export function timeHoursComponentIsDisabled( min, max, hour, currentMinute, disabledTimes ) {
+
+  if ( disabledTimes && disabledTimes.length > 0 ) {
+    let shouldDisable = false
+
+    for( const timeRange of disabledTimes ){
+      // 0:59-14:59
+      const times = timeRange.split('-')
+
+      // 0:59
+      const start = times[0].split(':')
+      const startHour = parseInt( start[0] ) // 0
+      const startMinute = parseInt( start[1] ) // 59
+
+      // 14:59
+      const end = times[1].split( ':' )
+      const endHour = parseInt( end[0] ) // 14
+      const endMinute = parseInt( end[1] ) // 59
+
+      if( ( hour === startHour && startMinute === 0 ) || ( hour === endHour && endMinute === 59 ) || ( hour > startHour && hour < endHour )){
+        shouldDisable = true
+        break
+      }
+
+    }
+
+    if( shouldDisable ){
+      return true
+    }
+  }
+
+ // console.log( 'timeHoursComponentIsDisabled', min, max, hour, currentMinute, disabledTimes )
+
+  return (min !== null && hour < min) ||
+         (max !== null && hour > max)
+}
+
+export function timeMinutesComponentIsDisabled( min, max, minute, currentHour, disabledTimes ) {
+
+  if ( disabledTimes && disabledTimes.length > 0 ) {
+    let shouldDisable = false
+
+    for ( const timeRange of disabledTimes ) {
+      // 2:59-14:59
+      const times = timeRange.split( '-' )
+
+      // 2:59
+      const start = times[ 0 ].split( ':' )
+      const startHour = parseInt( start[ 0 ] ) // 2
+      const startMinute = parseInt( start[ 1 ] ) // 59
+
+      // 14:59
+      const end = times[ 1 ].split( ':' )
+      const endHour = parseInt( end[ 0 ] ) // 14
+      const endMinute = parseInt( end[ 1 ] ) // 59
+
+      if( currentHour === startHour && minute >= startMinute ){
+        shouldDisable = true
+        break
+      }
+
+      if( currentHour === endHour && minute <= endMinute ){
+        shouldDisable = true
+        break
+      }
+
+      if( currentHour > startHour && currentHour < endHour ){
+        shouldDisable = true
+        break
+      }
+
+    }
+
+    if ( shouldDisable ) {
+      return true
+    }
+  }
+
+  return (min !== null && minute < min) ||
+         (max !== null && minute > max)
+}
+
+export function timeComponentIsDisabled ( min, max, component ) {
   return (min !== null && component < min) ||
          (max !== null && component > max)
 }

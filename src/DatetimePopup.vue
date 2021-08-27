@@ -4,6 +4,7 @@
       <div class="vdatetime-popup__title" v-if="title">{{ title }}</div>
       <div class="vdatetime-popup__year" @click="showYear" v-if="type !== 'time'">{{ year }}</div>
       <div class="vdatetime-popup__date" @click="showMonth" v-if="type !== 'time'">{{ dateFormatted }}</div>
+      <div class="vdatetime-popup__subtitle" v-if="subTitle">{{ subTitle }}</div>
     </div>
     <div class="vdatetime-popup__body">
       <datetime-year-picker
@@ -39,6 +40,7 @@
           :use12-hour="use12Hour"
           :hour-step="hourStep"
           :minute-step="minuteStep"
+          :disabled-times="disabledTimes"
           :min-time="minTime"
           :max-time="maxTime"></datetime-time-picker>
     </div>
@@ -123,6 +125,12 @@ export default {
         return []
       }
     },
+    disabledTimes: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
     auto: {
       type: Boolean,
       default: false
@@ -135,6 +143,9 @@ export default {
       type: Array
     },
     title: {
+      type: String
+    },
+    subTitle: {
       type: String
     }
   },
@@ -316,6 +327,12 @@ export default {
 .vdatetime-popup__title {
   margin-bottom: 8px;
   font-size: 21px;
+  font-weight: 300;
+}
+
+.vdatetime-popup__subtitle {
+  margin-top: 8px;
+  font-size: 14px;
   font-weight: 300;
 }
 

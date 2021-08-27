@@ -2,6 +2,7 @@
   <div class="vdatetime">
     <slot name="before"></slot>
     <input class="vdatetime-input"
+           v-if="useInput"
            :class="inputClass"
            :style="inputStyle"
            :id="inputId"
@@ -28,11 +29,13 @@
           :max-datetime="popupMaxDatetime"
           :disabled-dates="disabledDates"
           :disabled-days="disabledDays"
+          :disabled-times="disabledTimes"
           @confirm="confirm"
           @cancel="cancel"
           :auto="auto"
           :week-start="weekStart"
           :flow="flow"
+          :sub-title="subTitle"
           :title="title">
         <template slot="button-cancel__internal" slot-scope="scope">
           <slot name="button-cancel" v-bind:step="scope.step">{{ phrases.cancel }}</slot>
@@ -58,6 +61,10 @@ export default {
   inheritAttrs: false,
 
   props: {
+    useInput: {
+      type: Boolean,
+      default: true
+    },
     value: {
       type: String
     },
@@ -133,6 +140,12 @@ export default {
         return []
       }
     },
+    disabledTimes: {
+      type: Array,
+      default(){
+        return []
+      }
+    },
     auto: {
       type: Boolean,
       default: false
@@ -149,6 +162,9 @@ export default {
     title: {
       type: String
     },
+    subTitle: {
+      type: String
+    },
     hideBackdrop: {
       type: Boolean,
       default: false
@@ -156,7 +172,7 @@ export default {
     backdropClick: {
       type: Boolean,
       default: true
-    }
+    },
   },
 
   data () {
@@ -223,7 +239,9 @@ export default {
       this.$emit('input', datetime ? datetime.toISO() : '')
     },
     open (event) {
-      event.target.blur()
+      if( event ){
+        event.target.blur()
+      }
 
       this.isOpen = true
     },

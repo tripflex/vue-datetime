@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { hours, minutes, pad, timeComponentIsDisabled } from './util'
+import {hours, minutes, pad, timeComponentIsDisabled, timeHoursComponentIsDisabled, timeMinutesComponentIsDisabled} from './util'
 
 export default {
   props: {
@@ -45,6 +45,12 @@ export default {
     maxTime: {
       type: String,
       default: null
+    },
+    disabledTimes: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
 
@@ -63,14 +69,14 @@ export default {
       }).map(hour => ({
         number: pad(hour),
         selected: hour === this.hour,
-        disabled: timeComponentIsDisabled(this.minHour, this.maxHour, hour)
+        disabled: timeHoursComponentIsDisabled(this.minHour, this.maxHour, hour, this.minute, this.disabledTimes)
       }))
     },
     minutes () {
       return minutes(this.minuteStep).map(minute => ({
         number: pad(minute),
         selected: minute === this.minute,
-        disabled: timeComponentIsDisabled(this.minMinute, this.maxMinute, minute)
+        disabled: timeMinutesComponentIsDisabled(this.minMinute, this.maxMinute, minute, this.hour, this.disabledTimes)
       }))
     },
     minHour () {
